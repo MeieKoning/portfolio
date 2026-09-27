@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# test output
+test-results/
+playwright-report/
+lighthouse*.html
+lighthouse*.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
+# local tooling
+.claude/

@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meie Koning — Software developer & CS student at TU/e</title>
+    <meta
+      name="description"
+      content="Meie Koning builds AI tools, web apps and games that people actually use. CS student at TU/e, available for internships and side jobs, and co-founder of a software studio with Rik Loeffen."
+    />
+    <meta name="theme-color" content="#05090F" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Open Graph / social previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Meie Koning" />
+    <meta property="og:title" content="Meie Koning — I build software people actually use" />
+    <meta
+      property="og:description"
+      content="AI tools, web apps and games. CS student at TU/e, open to internships, and building products for clients with Rik Loeffen."
+    />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Meie Koning — portfolio" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="frame">
+      <!-- ============ SIDEBAR (desktop) / TOP BAR (mobile) ============ -->
+      <header class="sidebar">
+        <a class="logo" href="#top" aria-label="MK: Meie Koning, back to top">
+          <span aria-hidden="true">MK</span>
+        </a>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+        >
+          <span class="menu-toggle__label">Menu</span>
+          <span class="menu-toggle__icon" aria-hidden="true"></span>
+        </button>
+
+        <nav class="nav" id="site-nav" aria-label="Main">
+          <ul class="nav__list">
+            <li><a class="nav__link" href="#work" data-section="work">Work</a></li>
+            <li><a class="nav__link" href="#about" data-section="about">About</a></li>
+            <li><a class="nav__link" href="#services" data-section="services">Services</a></li>
+            <li><a class="nav__link" href="#contact" data-section="contact">Contact</a></li>
+            <li>
+              <a class="nav__link" href="/cv/Meie-Koning-CV.pdf" target="_blank" rel="noopener">
+                Resume<span class="visually-hidden"> (PDF, opens in new tab)</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar__progress" aria-hidden="true">
+          <span class="sidebar__progress-fill"></span>
+        </div>
+
+        <ul class="socials" aria-label="Social links">
+          <li>
+            <a href="https://www.linkedin.com/in/meiekoning" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <span class="icon" data-icon="linkedin"></span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/MeieKoning" target="_blank" rel="noopener" aria-label="GitHub">
+              <span class="icon" data-icon="github"></span>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:meie.koning@gmail.com" aria-label="Email">
+              <span class="icon" data-icon="mail"></span>
+            </a>
+          </li>
+        </ul>
+      </header>
+
+      <a class="btn btn--outline contact-btn" href="#contact" data-magnetic>Contact</a>
+
+      <!-- ============ SCROLL CONTAINER ============ -->
+      <div class="scroller" id="scroller">
+        <main id="main" tabindex="-1">
+          <!-- ============ HERO ============ -->
+          <section class="hero" id="top" aria-labelledby="hero-title">
+            <div class="hero__content">
+              <p class="eyebrow">I'm Meie Koning</p>
+
+              <h1 class="hero__words" id="hero-title">
+                <span class="visually-hidden">Meie Koning: from idea, to prototype, to product.</span>
+                <span class="hero__word" data-rank="0" aria-hidden="true">Idea.</span>
+                <span class="hero__word" data-rank="1" aria-hidden="true">Prototype.</span>
+                <span class="hero__word" data-rank="2" aria-hidden="true">Product.</span>
+              </h1>
+
+              <p class="hero__lead">I build AI tools, web apps and games that people actually use.</p>
+
+              <div class="hero__actions">
+                <a class="btn btn--solid" href="#work" data-magnetic>See my work</a>
+                <a class="btn btn--outline" href="#services" data-magnetic>Work with us</a>
+              </div>
+            </div>
+
+            <aside class="stack" aria-label="Tech stack">
+              <ul class="stack__preview" aria-hidden="true"></ul>
+              <button class="stack__more" type="button" aria-expanded="false" aria-controls="stack-panel">
+                <span class="stack__count"></span>
+                <span class="visually-hidden">Show full tech stack</span>
+              </button>
+              <div class="stack__panel" id="stack-panel">
+                <p class="meta">Full stack</p>
+                <ul class="stack__all"></ul>
+              </div>
+            </aside>
+
+            <a class="scroll-cue" href="#work" aria-label="Scroll to work">
+              <span class="scroll-cue__label" aria-hidden="true">Scroll</span>
+              <svg class="scroll-cue__svg" viewBox="0 0 16 72" aria-hidden="true">
+                <path class="scroll-cue__line" d="M8 0 V68" />
+                <path class="scroll-cue__arrow" d="M2 62 L8 68 L14 62" />
+              </svg>
+            </a>
+          </section>
+
+          <!-- ============ PROJECTS ============ -->
+          <section class="section" id="work" aria-labelledby="work-title">
+            <header class="section__head">
+              <p class="meta">01 / Selected work</p>
+              <h2 class="heading" id="work-title">
+                <span class="heading__mask"><span class="heading__main">Projects</span></span>
+                <span class="heading__mask" aria-hidden="true"><span class="heading__ghost">Projects</span></span>
+              </h2>
+              <p class="section__intro">
+                Working software, not mockups. Each one is live, and most you can try right here.
+              </p>
+            </header>
+
+            <ol class="projects">
+              <li class="project" data-preview="/projects/project-01.svg">
+                <div class="project__top">
+                  <span class="project__num" aria-hidden="true">01</span>
+                  <div class="project__title-wrap">
+                    <h3 class="project__title">[Project one: AI tool]</h3>
+                    <p class="meta project__date">[2025 — Present]</p>
+                  </div>
+                  <ul class="tech" aria-label="Built with">
+                    <li><span class="icon" data-icon="python" data-label></span></li>
+                    <li><span class="icon" data-icon="claude" data-label></span></li>
+                    <li><span class="icon" data-icon="react" data-label></span></li>
+                  </ul>
+                </div>
+                <dl class="case">
+                  <div class="case__item">
+                    <dt class="meta">Problem</dt>
+                    <dd>[One line: who had which problem, e.g. "Students lose hours searching lecture slides."]</dd>
+                  </div>
+                  <div class="case__item">
+                    <dt class="meta">What I built</dt>
+                    <dd>[One or two lines on what it does and the interesting technical part.]</dd>
+                  </div>
+                  <div class="case__item">
+                    <dt class="meta">Result</dt>
+                    <dd>[Something concrete: users, time saved, speed, what it enabled.]</dd>
+                  </div>
+                </dl>
+                <div class="project__links">
+                  <a class="link-arrow" href="#" data-todo>Live demo</a>
+                  <a class="link-arrow" href="https://github.com/MeieKoning" target="_blank" rel="noopener">GitHub</a>
+                </div>
+              </li>
+
+              <li class="project" data-preview="/projects/project-02.svg">
+                <div class="project__top">
+                  <span class="project__num" aria-hidden="true">02</span>
+                  <div class="project__title-wrap">
+                    <h3 class="project__title">[Project two: web app]</h3>
+                    <p class="meta project__date">[2024 — 2025]</p>
+                  </div>
+                  <ul class="tech" aria-label="Built with">
+                    <li><span class="icon" data-icon="typescript" data-label></span></li>
+                    <li><span class="icon" data-icon="nodedotjs" data-label></span></li>
+                    <li><span class="icon" data-icon="postgresql" data-label></span></li>
+                  </ul>
+                </div>
+                <dl class="case">
+                  <div class="case__item">
+                    <dt class="meta">Problem</dt>
+                    <dd>[One line: the problem.]</dd>
+                  </div>
+                  <div class="case__item">
+                    <dt class="meta">What I built</dt>
+                    <dd>[One or two lines: what you built.]</dd>
+                  </div>
+                  <div class="case__item">
+                    <dt class="meta">Result</dt>
+                    <dd>[A concrete result.]</dd>
+                  </div>
+                </dl>
+                <div class="project__links">
+                  <a class="link-arrow" href="#" data-todo>Live demo</a>
+                  <a class="link-arrow" href="https://github.com/MeieKoning" target="_blank" rel="noopener">GitHub</a>
+                </div>
+              </li>
+
+              <li class="project" data-preview="/projects/project-03.svg">
+                <div class="project__top">
+                  <span class="project__num" aria-hidden="true">03</span>
+                  <div class="project__title-wrap">
+                    <h3 class="project__title">[Project three: Discord bot]</h3>
+                    <p class="meta project__date">[2024]</p>
+                  </div>
+                  <ul class="tech" aria-label="Built with">
+                    <li><span class="icon" data-icon="javascript" data-label></span></li>
+                    <li><span class="icon" data-icon="discord" data-label></span></li>
+                    <li><span class="icon" data-icon="docker" data-label></span></li>
+                  </ul>
+                </div>
+                <dl class="case">
+                  <div class="case__item">
+                    <dt class="meta">Problem</dt>
+                    <dd>[One line: the problem.]</dd>
+                  </div>
+                  <div class="case__item">
+                    <dt class="meta">What I built</dt>
+                    <dd>[One or two lines: what you built.]</dd>
+                  </div>
+                  <div class="case__item">
+                    <dt class="meta">Result</dt>
+                    <dd>[A concrete result, e.g. "Running in 40 servers, 3k members."]</dd>
+                  </div>
+                </dl>
+                <div class="project__links">
+                  <a class="link-arrow" href="#" data-todo>Live demo</a>
+                  <a class="link-arrow" href="https://github.com/MeieKoning" target="_blank" rel="noopener">GitHub</a>
+                </div>
+              </li>
+
+              <li class="project" data-preview="/projects/project-04.svg">
+                <div class="project__top">
+                  <span class="project__num" aria-hidden="true">04</span>
+                  <div class="project__title-wrap">
+                    <h3 class="project__title">[Project four: game]</h3>
+                    <p class="meta project__date">[2023]</p>
+                  </div>
+                  <ul class="tech" aria-label="Built with">
+                    <li><span class="icon" data-icon="godotengine" data-label></span></li>
+                    <li><span class="icon" data-icon="cplusplus" data-label></span></li>
+                  </ul>
+                </div>
+                <dl class="case">
+                  <div class="case__item">
+                    <dt class="meta">Problem</dt>
+                    <dd>[One line: the problem or the challenge.]</dd>
+                  </div>
+                  <div class="case__item">
+                    <dt class="meta">What I built</dt>
+                    <dd>[One or two lines: what you built.]</dd>
+                  </div>
+                  <div class="case__item">
+                    <dt class="meta">Result</dt>
+                    <dd>[A concrete result, e.g. "Top 10% at a game jam, playable below."]</dd>
+                  </div>
+                </dl>
+                <div class="project__links">
+                  <a class="link-arrow" href="#" data-todo>Play it</a>
+                  <a class="link-arrow" href="https://github.com/MeieKoning" target="_blank" rel="noopener">GitHub</a>
+                </div>
+              </li>
+            </ol>
+          </section>
+
+          <!-- ============ EXPERIENCE ============ -->
+          <section class="section experience" id="experience" aria-labelledby="experience-title">
+            <div class="experience__pin">
+              <header class="section__head">
+                <p class="meta">02 / Experience</p>
+                <h2 class="heading" id="experience-title">
+                  <span class="heading__mask"><span class="heading__main">Experience</span></span>
+                  <span class="heading__mask" aria-hidden="true"><span class="heading__ghost">Experience</span></span>
+                </h2>
+              </header>
+
+              <div class="experience__track-wrap">
+                <div class="experience__progress" aria-hidden="true"><span></span></div>
+                <ol class="experience__track">
+                  <li class="role">
+                    <p class="meta role__date">[2025 — Present]</p>
+                    <h3 class="role__title">Co-founder</h3>
+                    <p class="role__org">[Company name], with Rik Loeffen</p>
+                    <p class="role__desc">[What you do: client projects, scoping, building, shipping.]</p>
+                  </li>
+                  <li class="role">
+                    <p class="meta role__date">[2024 — 2025]</p>
+                    <h3 class="role__title">[Role]</h3>
+                    <p class="role__org">[Organisation]</p>
+                    <p class="role__desc">[One line on what you did and what came out of it.]</p>
+                  </li>
+                  <li class="role">
+                    <p class="meta role__date">[2024]</p>
+                    <h3 class="role__title">[Role]</h3>
+                    <p class="role__org">[Organisation]</p>
+                    <p class="role__desc">[One line on what you did and what came out of it.]</p>
+                  </li>
+                  <li class="role">
+                    <p class="meta role__date">[2023 — Present]</p>
+                    <h3 class="role__title">BSc Computer Science</h3>
+                    <p class="role__org">Eindhoven University of Technology</p>
+                    <p class="role__desc">[Relevant courses, projects or a student team.]</p>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ ABOUT ============ -->
+          <section class="section about" id="about" aria-labelledby="about-title">
+            <header class="section__head">
+              <p class="meta">03 / About</p>
+              <h2 class="heading" id="about-title">
+                <span class="heading__mask"><span class="heading__main">About</span></span>
+                <span class="heading__mask" aria-hidden="true"><span class="heading__ghost">About</span></span>
+              </h2>
+            </header>
+
+            <div class="about__grid">
+              <figure class="about__photo">
+                <img
+                  src="/photo-placeholder.svg"
+                  alt="Portrait of Meie Koning"
+                  width="480"
+                  height="600"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+
+              <div class="about__body">
+                <p class="about__bio">
+                  I'm a Computer Science student at TU/e, and I like the moment an idea stops being a sketch and
+                  starts working. Most of what I know I learned by shipping things: [a tool people use every day, a
+                  bot that runs in real servers, a game strangers play]. I care about software that is fast, clear
+                  and actually used. Together with Rik Loeffen I'm starting [Company name], to do the same for
+                  clients.
+                </p>
+
+                <div class="about__lists">
+                  <div>
+                    <h3 class="meta about__label">Education</h3>
+                    <ol class="numbered">
+                      <li class="numbered__item">
+                        <span class="numbered__num" aria-hidden="true">01</span>
+                        <div>
+                          <p class="numbered__title">[BSc Computer Science]</p>
+                          <p class="meta">Eindhoven University of Technology · [2023 — 2026]</p>
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                  <div>
+                    <h3 class="meta about__label">Certificates</h3>
+                    <ol class="numbered">
+                      <li class="numbered__item">
+                        <span class="numbered__num" aria-hidden="true">01</span>
+                        <div>
+                          <p class="numbered__title">[Certificate name]</p>
+                          <p class="meta">[Issuer] · [Year]</p>
+                        </div>
+                      </li>
+                      <li class="numbered__item">
+                        <span class="numbered__num" aria-hidden="true">02</span>
+                        <div>
+                          <p class="numbered__title">[Certificate name]</p>
+                          <p class="meta">[Issuer] · [Year]</p>
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+
+                <a class="btn btn--outline" href="/cv/Meie-Koning-CV.pdf" download data-magnetic>
+                  Download CV <span class="meta btn__hint">PDF</span>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ SERVICES ============ -->
+          <section class="section services" id="services" aria-labelledby="services-title">
+            <header class="section__head">
+              <p class="meta">04 / [Company name] — with Rik Loeffen</p>
+              <h2 class="heading" id="services-title">
+                <span class="heading__mask"><span class="heading__main">Services</span></span>
+                <span class="heading__mask" aria-hidden="true"><span class="heading__ghost">Services</span></span>
+              </h2>
+              <p class="section__intro">
+                You bring the idea. We turn it into a working product: built, deployed and yours.
+              </p>
+            </header>
+
+            <ol class="services__list">
+              <li class="service">
+                <span class="service__num" aria-hidden="true">01</span>
+                <h3 class="service__title">Web apps</h3>
+                <p class="service__desc">
+                  Dashboards, portals and internal tools. Fast, responsive and deployed for you, on a modern stack
+                  you can keep building on.
+                </p>
+              </li>
+              <li class="service">
+                <span class="service__num" aria-hidden="true">02</span>
+                <h3 class="service__title">AI tools &amp; automations</h3>
+                <p class="service__desc">
+                  Assistants, document processing and workflow automations built on current AI models, so your team
+                  spends its hours on the work that matters.
+                </p>
+              </li>
+              <li class="service">
+                <span class="service__num" aria-hidden="true">03</span>
+                <h3 class="service__title">Discord bots</h3>
+                <p class="service__desc">
+                  Custom bots for communities and businesses: onboarding, moderation, games, and links to the tools
+                  you already use.
+                </p>
+              </li>
+            </ol>
+
+            <div class="process">
+              <h3 class="meta process__label">How we work</h3>
+              <ol class="process__steps">
+                <li><span class="meta">01</span> Idea <span class="process__note">We scope it with you</span></li>
+                <li><span class="meta">02</span> Prototype <span class="process__note">A working version, fast</span></li>
+                <li><span class="meta">03</span> Launch <span class="process__note">Live, handed over, supported</span></li>
+              </ol>
+            </div>
+          </section>
+
+          <!-- ============ CONTACT ============ -->
+          <section class="section contact" id="contact" aria-labelledby="contact-title">
+            <header class="section__head">
+              <p class="meta">05 / Contact</p>
+              <h2 class="heading" id="contact-title">
+                <span class="heading__mask"><span class="heading__main">Contact</span></span>
+                <span class="heading__mask" aria-hidden="true"><span class="heading__ghost">Contact</span></span>
+              </h2>
+            </header>
+
+            <form class="form" id="contact-form" novalidate>
+              <fieldset class="toggle">
+                <legend class="visually-hidden">What brings you here?</legend>
+                <input type="radio" name="intent" id="intent-hiring" value="hiring" checked />
+                <label for="intent-hiring">I'm hiring</label>
+                <input type="radio" name="intent" id="intent-project" value="project" />
+                <label for="intent-project">I have a project</label>
+                <span class="toggle__thumb" aria-hidden="true"></span>
+              </fieldset>
+
+              <div class="field">
+                <label class="meta field__label" for="f-name">Name</label>
+                <input class="field__input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-error" />
+                <span class="field__line" aria-hidden="true"></span>
+                <p class="field__error" id="f-name-error"></p>
+              </div>
+              <div class="field">
+                <label class="meta field__label" for="f-email">Email</label>
+                <input class="field__input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-error" />
+                <span class="field__line" aria-hidden="true"></span>
+                <p class="field__error" id="f-email-error"></p>
+              </div>
+              <div class="field">
+                <label class="meta field__label" for="f-message">Message</label>
+                <textarea class="field__input" id="f-message" name="message" rows="4" required aria-describedby="f-message-error"></textarea>
+                <span class="field__line" aria-hidden="true"></span>
+                <p class="field__error" id="f-message-error"></p>
+              </div>
+
+              <!-- honeypot against spam bots -->
+              <div class="visually-hidden" aria-hidden="true">
+                <label for="f-gotcha">Leave empty</label>
+                <input id="f-gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <div class="form__foot">
+                <button class="btn btn--solid form__submit" type="submit" data-magnetic>
+                  <span class="form__submit-label">Send message</span>
+                </button>
+                <p class="form__status" role="status" aria-live="polite"></p>
+              </div>
+            </form>
+          </section>
+        </main>
+
+        <footer class="footer">
+          <p class="meta">© <span id="year">2026</span> Meie Koning</p>
+          <p class="meta">Built with Vite, GSAP &amp; Three.js</p>
+          <a class="meta link-arrow link-arrow--up" href="#top">Back to top</a>
+        </footer>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
