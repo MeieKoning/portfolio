@@ -4,6 +4,7 @@ import { hydrateIcons, iconSvg, ICONS } from './icons.js';
 import { STACK, STACK_PREVIEW_COUNT, HERO_WORD_INTERVAL } from './config.js';
 import { initContact } from './contact.js';
 import { initParticles } from './particles.js';
+import { initScroll } from './scroll.js';
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const scroller = document.getElementById('scroller');
@@ -99,7 +100,7 @@ function initMenu() {
 }
 
 // ---------- In-page links: scroll inside the frame, then move focus ----------
-function initAnchors() {
+function initAnchors(scroll) {
   document.addEventListener('click', (e) => {
     const link = e.target.closest('a[href^="#"]');
     if (!link) return;
@@ -109,8 +110,7 @@ function initAnchors() {
     if (!target) return;
     e.preventDefault();
 
-    const top = id === 'top' ? 0 : target.offsetTop;
-    scroller.scrollTo({ top, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+    scroll.scrollTo(id === 'top' ? 0 : target);
     history.replaceState(null, '', id === 'top' ? location.pathname : `#${id}`);
 
     // Move keyboard focus to the section so the next Tab continues from there.
@@ -128,7 +128,7 @@ function initAnchors() {
 // ---------- Keyboard scrolling ----------
 // The page scrolls inside .scroller (so it can sit in the frame). When focus is on
 // <body>, browsers do not route PageDown/Space/arrows there, so forward them.
-function initKeyboardScroll() {
+function initKeyboardScroll(scroll) {
   document.addEventListener('keydown', (e) => {
     if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
     const el = document.activeElement;
@@ -152,27 +152,8 @@ function initKeyboardScroll() {
     if (e.key === 'End') top = scroller.scrollHeight;
     if (top === null) return;
     e.preventDefault();
-    scroller.scrollTo({ top, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+    scroll.scrollTo(Math.max(0, Math.min(top, scroller.scrollHeight - scroller.clientHeight)));
   });
-}
-
-hydrateIcons();
-initStack();
-initHeroWords();
-initMenu();
-initAnchors();
-initKeyboardScroll();
-initContact();
-initParticles({
-  canvas: document.getElementById('particles'),
-  hero: document.querySelector('.hero'),
-  scroller,
-  reducedMotion,
-});
-
-// Custom cursor (and GSAP with it) only matters on devices with a mouse.
-if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reducedMotion.matches) {
-  import('./cursor.js').then(({ initCursor }) => initCursor({ reducedMotion }));
 }
 
 // Three.js is only needed for the torus: load it after first paint so it never
@@ -198,10 +179,36 @@ const torusReady = new Promise((resolve) => {
   };
   window.addEventListener('resize', onResize);
 });
+
+hydrateIcons();
+initStack();
+initHeroWords();
+initMenu();
+initContact();
+initParticles({
+  canvas: document.getElementById('particles'),
+  hero: document.querySelector('.hero'),
+  scroller,
+  reducedMotion,
+});
+
+// The custom cursor only matters on devices with a mouse.
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reducedMotion.matches) {
+  import('./cursor.js').then(({ initCursor }) => initCursor({ reducedMotion }));
+}
+
+const scroll = initScroll({
+  scroller,
+  content: document.querySelector('.scroller__content'),
+  torusReady,
+});
+initAnchors(scroll);
+initKeyboardScroll(scroll);
+
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // Open on the right section when the page is loaded with a hash.
 if (location.hash) {
   const target = document.getElementById(location.hash.slice(1));
-  if (target) requestAnimationFrame(() => (scroller.scrollTop = target.offsetTop));
+  if (target) requestAnimationFrame(() => scroll.scrollTo(target, { immediate: true }));
 }

@@ -14,14 +14,31 @@ test.beforeEach(async ({ page }, testInfo) => {
   });
   page.on('pageerror', (e) => testInfo.consoleProblems.push(e.message));
   await page.goto('/');
+  // Font swaps change section heights; interact once the layout is final.
+  await page.evaluate(() =>
+    Promise.all([document.fonts.load('700 16px "Space Grotesk Variable"'), document.fonts.load('12px "Space Mono"')]),
+  );
+  await page.waitForTimeout(300); // let the layout and scroll triggers settle
 });
 
 test.afterEach(async ({}, testInfo) => {
   expect(testInfo.consoleProblems, 'console errors or warnings').toEqual([]);
 });
 
-const scrollTopOf = (page) => page.evaluate(() => document.getElementById('scroller').scrollTop);
-const offsetOf = (page, id) => page.evaluate((id) => document.getElementById(id).offsetTop, id);
+// Where a section's top sits relative to the top of the scroll container (0 = at the top).
+const topInView = (page, id) =>
+  page.evaluate((id) => {
+    const sc = document.getElementById('scroller');
+    const el = document.getElementById(id);
+    const max = sc.scrollHeight - sc.clientHeight;
+    // The last section may not reach the top when the page ends first.
+    if (Math.abs(sc.scrollTop - max) < 2) return 0;
+    return Math.round(el.getBoundingClientRect().top - sc.getBoundingClientRect().top);
+  }, id);
+const expectSectionAtTop = (page, id) =>
+  expect.poll(() => topInView(page, id), { timeout: 10000 }).toBeGreaterThanOrEqual(-2).then(() =>
+    expect.poll(() => topInView(page, id), { timeout: 10000 }).toBeLessThanOrEqual(80),
+  );
 
 test('page loads with hero and key sections', async ({ page }) => {
   await expect(page).toHaveTitle(/Meie Koning/);
@@ -40,28 +57,36 @@ test('page loads with hero and key sections', async ({ page }) => {
 });
 
 for (const id of ['work', 'about', 'services', 'contact']) {
-  test(`nav link scrolls to #${id}`, async ({ page, isMobile }) => {
+  test(`nav link scrolls to #${id} and marks it active`, async ({ page, isMobile }) => {
     if (isMobile) {
       await page.getByRole('button', { name: /menu/i }).click();
       await expect(page.locator('#site-nav')).toBeVisible();
     }
     await page.locator(`#site-nav a[href="#${id}"]`).click();
-    const target = await offsetOf(page, id);
-    const max = await page.evaluate(() => {
-      const s = document.getElementById('scroller');
-      return s.scrollHeight - s.clientHeight;
-    });
-    await expect.poll(() => scrollTopOf(page), { timeout: 10000 }).toBeCloseTo(Math.min(target, max), -1);
+    await expectSectionAtTop(page, id);
     await expect(page.locator(`#${id} h2`)).toBeInViewport();
+    await expect(page.locator(`#site-nav a[href="#${id}"]`)).toHaveAttribute('aria-current', 'true');
   });
 }
 
 test('hero buttons scroll to projects and services', async ({ page }) => {
   await page.getByRole('link', { name: 'See my work' }).click();
-  await expect.poll(() => scrollTopOf(page)).toBeCloseTo(await offsetOf(page, 'work'), -1);
-  await page.locator('.scroller').evaluate((s) => (s.scrollTop = 0));
+  await expectSectionAtTop(page, 'work');
+  await page.locator('.logo').click();
+  await expect.poll(() => page.evaluate(() => document.getElementById('scroller').scrollTop), { timeout: 10000 }).toBe(0);
   await page.getByRole('link', { name: 'Work with us' }).click();
-  await expect.poll(() => scrollTopOf(page)).toBeCloseTo(await offsetOf(page, 'services'), -1);
+  await expectSectionAtTop(page, 'services');
+});
+
+test('scrolling back up restores the hero', async ({ page }) => {
+  await page.locator('#site-nav a[href="#about"]').dispatchEvent('click');
+  await expectSectionAtTop(page, 'about');
+  await page.locator('.logo').dispatchEvent('click');
+  await expect.poll(() => page.evaluate(() => document.getElementById('scroller').scrollTop), { timeout: 10000 }).toBe(0);
+  await expect
+    .poll(() => page.evaluate(() => getComputedStyle(document.querySelector('.hero__words')).opacity))
+    .toBe('1');
+  await expect(page.locator('.hero__lead')).toBeInViewport();
 });
 
 test('contact form validates empty and invalid input', async ({ page }) => {
@@ -111,4 +136,15 @@ test('custom cursor only on mouse devices; particle canvas renders', async ({ pa
   const size = await page.locator('#particles').evaluate((c) => c.width * c.height);
   expect(size).toBeGreaterThan(0);
   await expect(page.locator('.cursor-dot')).toHaveCount(isMobile ? 0 : 1);
+});
+
+test.describe('reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+  test('no smooth scrolling, no pinning, content still reachable', async ({ page }) => {
+    await expect(page.locator('#scroller')).not.toHaveClass(/lenis/);
+    await expect(page.locator('.pin-spacer')).toHaveCount(0);
+    await page.locator('a[href="#contact"]').first().dispatchEvent('click');
+    await expectSectionAtTop(page, 'contact');
+    await expect(page.locator('#contact h2')).toBeVisible();
+  });
 });

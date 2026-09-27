@@ -41,6 +41,7 @@ src/contact.js          Contact form: intent toggle, validation, Formspree submi
 src/particles.js        Canvas 2D particle network (hero background)
 src/cursor.js           Custom cursor + magnetic buttons (mouse devices only)
 src/torus.js            Three.js wireframe torus (desktop/tablet)
+src/scroll.js           Lenis smooth scroll + GSAP ScrollTrigger animations
 src/styles/main.css     Design tokens, layout, responsive rules
 public/                 Static files: CV, OG image, project previews, favicon
 scripts/generate-assets.mjs  Regenerates the Open Graph image

@@ -42,6 +42,8 @@
   --pad-x: clamp(20px, 6vw, 96px);
   --section-y: clamp(96px, 14vh, 160px);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  /* visible height inside the frame */
+  --screen-h: calc(100dvh - 2 * var(--gap) - 2 * var(--frame-border));
 
   color-scheme: dark;
 }
@@ -324,6 +326,20 @@ textarea {
   display: none;
 }
 
+/* Elements waiting to slide in (or drifting out) must not widen the page */
+.scroller__content {
+  overflow-x: clip;
+}
+
+/* Lenis */
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 /* =========================================================
    Sidebar
    ========================================================= */
@@ -601,7 +617,7 @@ textarea {
    ========================================================= */
 .hero {
   position: relative;
-  min-height: 100%;
+  min-height: var(--screen-h);
   display: flex;
   align-items: center;
   padding: 120px calc(var(--pad-x) + 72px) 140px var(--pad-x);
@@ -1052,9 +1068,36 @@ textarea {
   border-left: 1px solid var(--line);
 }
 
+.service {
+  position: relative;
+}
+
+/* Lights up when scrolled into view (see scroll.js) */
+.service::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s var(--ease-out);
+}
+
+.service.is-lit::before {
+  transform: scaleX(1);
+}
+
 .service__num {
   font-family: var(--font-mono);
   font-size: 14px;
+  color: var(--muted);
+  transition: color 0.6s;
+}
+
+.service.is-lit .service__num {
   color: var(--accent);
 }
 
@@ -1260,6 +1303,131 @@ textarea {
   border-top: 1px solid var(--line);
 }
 
+/* Experience on desktop: one horizontal row, scrolled sideways while pinned */
+@media (min-width: 1024px) {
+  .experience {
+    display: flex;
+    align-items: center;
+    min-height: var(--screen-h);
+    padding-block: clamp(56px, 9vh, 96px);
+    overflow: hidden;
+  }
+
+  .experience__pin {
+    width: 100%;
+  }
+
+  .experience .section__head {
+    margin-bottom: clamp(32px, 6vh, 64px);
+  }
+
+  .experience__track {
+    display: flex;
+    width: max-content;
+    gap: clamp(40px, 5vw, 80px);
+  }
+
+  .role {
+    flex: none;
+    width: clamp(280px, 27vw, 400px);
+  }
+}
+
+/* =========================================================
+   Project hover preview (follows the cursor)
+   ========================================================= */
+.project-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 320px;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  overflow: hidden;
+  pointer-events: none;
+  clip-path: inset(100% 0% 0% 0%);
+  background: var(--surface);
+}
+
+.project-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* =========================================================
+   Contact: success state
+   ========================================================= */
+.form__submit {
+  overflow: hidden;
+}
+
+.form__check {
+  position: absolute;
+  inset: 0;
+  width: 24px;
+  height: 24px;
+  margin: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+}
+
+.form__submit-label {
+  transition: opacity 0.3s, transform 0.4s var(--ease-out);
+}
+
+.form.is-sent .form__submit {
+  background: var(--accent);
+  color: var(--bg);
+  animation: sent-pulse 1s var(--ease-out);
+}
+
+.form.is-sent .form__submit-label {
+  opacity: 0;
+  transform: translateY(-120%);
+}
+
+.form.is-sent .form__check {
+  animation: draw-check 0.6s 0.25s var(--ease-out) forwards;
+}
+
+.form.is-sent .form__status {
+  animation: status-in 0.6s 0.35s var(--ease-out) both;
+}
+
+.form.is-sending .form__submit-label {
+  opacity: 0.5;
+}
+
+@keyframes draw-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes sent-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(94, 242, 224, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 22px rgba(94, 242, 224, 0);
+  }
+}
+
+@keyframes status-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
 /* =========================================================
    Tablet / mobile: drop the frame, sidebar becomes a top bar
    ========================================================= */
@@ -1454,6 +1622,12 @@ textarea {
     gap: 64px 40px;
   }
 
+  /* The timeline line + dots only make sense in the horizontal desktop layout */
+  .experience__progress,
+  .role::before {
+    display: none;
+  }
+
   .about__grid {
     grid-template-columns: 1fr;
   }
@@ -1542,14 +1716,6 @@ textarea {
   .experience__track {
     grid-template-columns: 1fr;
     gap: 48px;
-  }
-
-  .experience__progress {
-    display: none;
-  }
-
-  .role::before {
-    display: none;
   }
 
   .about__lists {

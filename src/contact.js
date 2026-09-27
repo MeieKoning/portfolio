@@ -51,7 +51,7 @@ export function initContact({ onSuccess } = {}) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     status.textContent = '';
-    form.classList.remove('is-error');
+    form.classList.remove('is-error', 'is-sent');
 
     const invalid = fields.filter((input) => !validateField(input));
     if (invalid.length) {
@@ -81,6 +81,8 @@ export function initContact({ onSuccess } = {}) {
       form.reset();
       applyIntent();
       form.classList.add('is-sent');
+      // The check mark stays for a moment, then the button is ready again.
+      setTimeout(() => form.classList.remove('is-sent'), 5000);
       status.textContent = 'Thanks! Your message is on its way. Expect a reply within two days.';
       onSuccess?.(form);
     } catch (err) {
