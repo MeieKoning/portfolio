@@ -1,0 +1,11 @@
+// Cloudflare Workers config: serves the Vite build (dist/) as a static site.
+// No server code; _headers in public/ is applied to the responses.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "meiekoning",
+  "compatibility_date": "2025-09-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

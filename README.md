@@ -5,7 +5,7 @@ Personal portfolio of Meie Koning, Computer Science student at TU/e. The site is
 - **Recruiters and interviewers** (internships, side jobs): proof that I build real, working software.
 - **Potential clients** of the software studio I'm starting with Rik Loeffen: proof that we can turn an idea into a working product.
 
-**Live:** _coming soon (Cloudflare Pages)_
+**Live:** _coming soon (Cloudflare)_
 
 ## Tech stack
 
@@ -16,11 +16,11 @@ Personal portfolio of Meie Koning, Computer Science student at TU/e. The site is
 - Canvas 2D particle network
 - [Formspree](https://formspree.io) for the contact form (no backend)
 - [Playwright](https://playwright.dev) smoke tests
-- Hosted on Cloudflare Pages
+- Hosted on Cloudflare (Workers static assets)
 
 ## Run it locally
 
-Requires Node 20+.
+Requires Node 22+ (Wrangler, the Cloudflare deploy tool, needs it).
 
 ```bash
 npm install
@@ -46,7 +46,8 @@ src/scroll.js           Lenis smooth scroll + GSAP ScrollTrigger animations
 src/styles/main.css     Design tokens, layout, responsive rules
 src/assets/fonts/       Space Grotesk + Space Mono (latin subsets, inlined into the CSS)
 public/                 Static files: CV, OG image, project previews, icons
-public/_headers         Cloudflare Pages headers: caching + security (CSP)
+public/_headers         Cloudflare headers: caching + security (CSP)
+wrangler.jsonc          Cloudflare deploy config (static site from dist/)
 scripts/generate-assets.mjs  Regenerates the Open Graph image and Apple touch icon
 tests/smoke.spec.js     Playwright smoke tests
 ```
@@ -67,8 +68,11 @@ submits (Formspree is mocked), reduced motion works and the mobile menu is acces
 
 ## Deployment
 
-Cloudflare Pages, connected to this repo: every push to `main` deploys to production, and every other branch gets its own preview URL.
+Cloudflare Workers (static assets, free plan), connected to this GitHub repo: every push to
+`main` builds and deploys to production. `wrangler.jsonc` tells Cloudflare to serve `dist/`
+as a static site, with `public/404.html` for unknown paths and `public/_headers` for caching
+and security headers.
 
 - Build command: `npm run build`
-- Output directory: `dist`
-- Node version: 20 (see `.nvmrc`)
+- Deploy command: `npx wrangler deploy`
+- Node version: 22 (see `.nvmrc`)
