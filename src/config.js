@@ -2,7 +2,7 @@
 
 // Formspree form ID (the part after /f/ in your form endpoint). Not a secret:
 // it is visible in the page anyway. Lock it down with "allowed domains" in Formspree.
-export const FORMSPREE_ID = 'YOUR_FORM_ID';
+export const FORMSPREE_ID = 'xljdoayp';
 
 // Tech stack shown in the hero column. The first PREVIEW_COUNT appear as circles,
 // the rest sit behind the "+N" circle. Keys refer to src/icons.js.

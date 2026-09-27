@@ -1,12 +1,9 @@
-import '@fontsource-variable/space-grotesk/wght.css';
-import '@fontsource/space-mono/400.css';
 import './styles/main.css';
 
 import { hydrateIcons, iconSvg, ICONS } from './icons.js';
 import { STACK, STACK_PREVIEW_COUNT, HERO_WORD_INTERVAL } from './config.js';
 import { initContact } from './contact.js';
 import { initParticles } from './particles.js';
-import { initCursor } from './cursor.js';
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const scroller = document.getElementById('scroller');
@@ -172,7 +169,35 @@ initParticles({
   scroller,
   reducedMotion,
 });
-initCursor({ reducedMotion });
+
+// Custom cursor (and GSAP with it) only matters on devices with a mouse.
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reducedMotion.matches) {
+  import('./cursor.js').then(({ initCursor }) => initCursor({ reducedMotion }));
+}
+
+// Three.js is only needed for the torus: load it after first paint so it never
+// delays the content. The scroll animations use the returned controller.
+// Phones skip it: behind stacked text it has to be nearly invisible anyway, and
+// that saves ~130 KB of JavaScript and GPU work on small devices.
+const torusReady = new Promise((resolve) => {
+  const load = () =>
+    import('./torus.js')
+      .then(({ initTorus }) =>
+        resolve(initTorus({ canvas: document.getElementById('torus'), hero: document.querySelector('.hero'), reducedMotion })),
+      )
+      .catch(() => resolve(null));
+  const idle = () =>
+    'requestIdleCallback' in window ? requestIdleCallback(load, { timeout: 1500 }) : setTimeout(load, 300);
+  const start = () => (document.readyState === 'complete' ? idle() : window.addEventListener('load', idle, { once: true }));
+  if (window.innerWidth >= 768) return start();
+  // Opened narrow: load it if the window is widened later.
+  const onResize = () => {
+    if (window.innerWidth < 768) return;
+    window.removeEventListener('resize', onResize);
+    start();
+  };
+  window.addEventListener('resize', onResize);
+});
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // Open on the right section when the page is loaded with a hash.

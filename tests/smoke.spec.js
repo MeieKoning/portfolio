@@ -7,6 +7,9 @@ const formConfigured = !readFileSync('src/config.js', 'utf8').includes("FORMSPRE
 test.beforeEach(async ({ page }, testInfo) => {
   testInfo.consoleProblems = [];
   page.on('console', (m) => {
+    // Headless Chromium renders WebGL in software and logs GPU driver notices
+    // ("GPU stall due to ReadPixels"). They come from the test browser, not the site.
+    if (m.text().includes('GL Driver Message')) return;
     if (['error', 'warning'].includes(m.type())) testInfo.consoleProblems.push(m.text());
   });
   page.on('pageerror', (e) => testInfo.consoleProblems.push(e.message));

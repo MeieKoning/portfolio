@@ -1,4 +1,23 @@
 /* =========================================================
+   Fonts (self-hosted latin subsets, preloaded in index.html; SIL OFL)
+   ========================================================= */
+@font-face {
+  font-family: 'Space Grotesk Variable';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/space-grotesk.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/space-mono.woff2') format('woff2');
+}
+
+/* =========================================================
    Tokens
    ========================================================= */
 :root {
@@ -171,6 +190,35 @@ textarea {
 
 .bg-canvas.is-dimmed {
   opacity: 0.45;
+}
+
+.bg-canvas--torus {
+  opacity: 0;
+}
+
+.bg-canvas--torus.is-ready {
+  opacity: 1;
+}
+
+.bg-canvas--torus.is-ready.is-dimmed {
+  opacity: 0.25;
+}
+
+/* Soft light behind the torus */
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 38% 45% at 68% 50%, rgba(94, 242, 224, 0.07), transparent 70%),
+    radial-gradient(ellipse 70% 70% at 68% 50%, rgba(46, 140, 133, 0.06), transparent 75%);
+}
+
+@media (max-width: 1023px) {
+  .bg-glow {
+    background: radial-gradient(ellipse 70% 40% at 50% 58%, rgba(94, 242, 224, 0.07), transparent 70%);
+  }
 }
 
 .cursor-dot,

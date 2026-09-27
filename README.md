@@ -12,7 +12,7 @@ Personal portfolio of Meie Koning, Computer Science student at TU/e. The site is
 - [Vite](https://vitejs.dev) + vanilla JavaScript (ES modules)
 - [GSAP](https://gsap.com) + ScrollTrigger for scroll animations
 - [Lenis](https://lenis.darkroom.engineering) for smooth scrolling
-- [Three.js](https://threejs.org) for the wireframe torus (only)
+- [Three.js](https://threejs.org) for the wireframe torus only (lazy-loaded, skipped on phones)
 - Canvas 2D particle network
 - [Formspree](https://formspree.io) for the contact form (no backend)
 - [Playwright](https://playwright.dev) smoke tests
@@ -38,6 +38,9 @@ src/main.js             Entry: wires up the modules
 src/config.js           Easy-to-edit settings: Formspree ID, tech stack, form copy
 src/icons.js            Brand icons (simple-icons) + LinkedIn/mail
 src/contact.js          Contact form: intent toggle, validation, Formspree submit
+src/particles.js        Canvas 2D particle network (hero background)
+src/cursor.js           Custom cursor + magnetic buttons (mouse devices only)
+src/torus.js            Three.js wireframe torus (desktop/tablet)
 src/styles/main.css     Design tokens, layout, responsive rules
 public/                 Static files: CV, OG image, project previews, favicon
 scripts/generate-assets.mjs  Regenerates the Open Graph image
