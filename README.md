@@ -5,7 +5,7 @@ Personal portfolio of Meie Koning, Computer Science student at TU/e. The site is
 - **Recruiters and interviewers** (internships, side jobs): proof that I build real, working software.
 - **Potential clients** of the software studio I'm starting with Rik Loeffen: proof that we can turn an idea into a working product.
 
-**Live:** _coming soon (Cloudflare)_
+**Live:** https://meiekoning.meie-koning.workers.dev
 
 ## Tech stack
 
@@ -76,3 +76,5 @@ and security headers.
 - Build command: `npm run build`
 - Deploy command: `npx wrangler deploy`
 - Node version: 22 (see `.nvmrc`)
+- Site URL for social previews, canonical link and sitemap: `SITE_URL` in `vite.config.js`
+- Run the smoke tests against the live site: `BASE_URL=https://meiekoning.meie-koning.workers.dev npm test`
