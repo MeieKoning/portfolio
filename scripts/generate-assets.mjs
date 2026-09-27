@@ -1,4 +1,5 @@
-// Renders public/og-image.png (1200x630 social preview) with Playwright's Chromium.
+// Renders public/og-image.png (1200x630 social preview) and public/apple-touch-icon.png
+// with Playwright's Chromium.
 // Pass --cv-placeholder to also write a placeholder public/cv/Meie-Koning-CV.pdf.
 // Run: node scripts/generate-assets.mjs
 import { chromium } from '@playwright/test';
@@ -6,10 +7,10 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
-const font = (p) => readFileSync(`${root}node_modules/${p}`).toString('base64');
+const font = (p) => readFileSync(`${root}src/assets/fonts/${p}`).toString('base64');
 const fontCss = `
-  @font-face { font-family: 'SG'; font-weight: 300 700; src: url(data:font/woff2;base64,${font('@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2')}) format('woff2'); }
-  @font-face { font-family: 'SM'; src: url(data:font/woff2;base64,${font('@fontsource/space-mono/files/space-mono-latin-400-normal.woff2')}) format('woff2'); }
+  @font-face { font-family: 'SG'; font-weight: 300 700; src: url(data:font/woff2;base64,${font('space-grotesk.woff2')}) format('woff2'); }
+  @font-face { font-family: 'SM'; src: url(data:font/woff2;base64,${font('space-mono.woff2')}) format('woff2'); }
 `;
 
 const og = `<!doctype html><html><head><style>${fontCss}
@@ -59,6 +60,14 @@ await page.setContent(og);
 await page.evaluate(() => document.fonts.ready);
 await page.screenshot({ path: `${root}public/og-image.png` });
 console.log('wrote public/og-image.png');
+
+// 180x180 home-screen icon for iOS (it adds its own rounded corners)
+await page.setViewportSize({ width: 180, height: 180 });
+await page.setContent(`<style>${fontCss} body{margin:0;width:180px;height:180px;background:#05090F;display:grid;place-items:center}
+  div{width:132px;height:132px;border:4px solid #5EF2E0;border-radius:34px;display:grid;place-items:center;font:700 56px SG;letter-spacing:-.04em;color:#5EF2E0}</style><div>MK</div>`);
+await page.evaluate(() => document.fonts.ready);
+await page.screenshot({ path: `${root}public/apple-touch-icon.png` });
+console.log('wrote public/apple-touch-icon.png');
 
 if (process.argv.includes('--cv-placeholder')) {
   await page.setContent(cv);

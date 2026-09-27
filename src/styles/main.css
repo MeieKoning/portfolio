@@ -1,12 +1,13 @@
 /* =========================================================
-   Fonts (self-hosted latin subsets, preloaded in index.html; SIL OFL)
+   Fonts (self-hosted latin subsets, SIL OFL). Vite inlines them into the CSS
+   (see vite.config.js) so they arrive with the stylesheet: no swap, no layout shift.
    ========================================================= */
 @font-face {
   font-family: 'Space Grotesk Variable';
   font-style: normal;
   font-weight: 300 700;
   font-display: swap;
-  src: url('/fonts/space-grotesk.woff2') format('woff2');
+  src: url('../assets/fonts/space-grotesk.woff2') format('woff2');
 }
 
 @font-face {
@@ -14,7 +15,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/space-mono.woff2') format('woff2');
+  src: url('../assets/fonts/space-mono.woff2') format('woff2');
 }
 
 /* =========================================================
@@ -351,8 +352,8 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 36px;
-  padding: 28px 0;
+  gap: clamp(14px, 3.6vh, 36px);
+  padding: clamp(16px, 3vh, 28px) 0;
   border-right: 1px solid var(--line);
 }
 
@@ -385,7 +386,7 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: clamp(10px, 2.8vh, 28px);
 }
 
 .nav__link {
@@ -411,7 +412,7 @@ textarea {
   position: relative;
   flex: 1;
   width: 1px;
-  min-height: 40px;
+  min-height: 24px;
   background: var(--line);
 }
 
@@ -426,7 +427,7 @@ textarea {
 .socials {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: clamp(6px, 1.8vh, 18px);
 }
 
 .socials a {
@@ -620,7 +621,7 @@ textarea {
   min-height: var(--screen-h);
   display: flex;
   align-items: center;
-  padding: 120px calc(var(--pad-x) + 72px) 140px var(--pad-x);
+  padding: clamp(64px, 11vh, 120px) calc(var(--pad-x) + 72px) clamp(96px, 14vh, 140px) var(--pad-x);
 }
 
 .hero__content {
@@ -646,7 +647,7 @@ textarea {
   display: flex;
   flex-direction: column;
   font-weight: 700;
-  font-size: clamp(56px, min(11vw, 15.5vh), 168px);
+  font-size: clamp(56px, min(11vw, 13.5vh), 168px);
   line-height: 0.9;
   letter-spacing: -0.055em;
 }
@@ -747,6 +748,7 @@ textarea {
   border: 1px solid var(--line-strong);
   border-radius: 16px;
   background: rgba(10, 21, 32, 0.94);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   opacity: 0;
   visibility: hidden;
@@ -833,6 +835,10 @@ textarea {
 .scroll-cue__arrow {
   stroke-dasharray: 18;
   animation: cue-arrow 2.4s var(--ease-out) infinite;
+}
+
+.hero.is-offscreen .scroll-cue__svg path {
+  animation-play-state: paused;
 }
 
 @keyframes cue-line {
@@ -1236,6 +1242,10 @@ textarea {
   min-height: 48px;
 }
 
+.field__input {
+  scroll-margin-block: 120px; /* focusing a field leaves room around it */
+}
+
 .field__input::placeholder {
   color: rgba(159, 184, 181, 0.55);
 }
@@ -1297,10 +1307,28 @@ textarea {
 .footer {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
   padding: 40px var(--pad-x);
   border-top: 1px solid var(--line);
+}
+
+@media (max-height: 800px) {
+  .scroll-cue {
+    bottom: 24px;
+  }
+
+  .scroll-cue__svg {
+    height: 48px;
+  }
+}
+
+/* Short desktop screens: the sidebar keeps the nav; socials live in the footer */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .sidebar .socials {
+    display: none;
+  }
 }
 
 /* Experience on desktop: one horizontal row, scrolled sideways while pinned */
@@ -1428,6 +1456,27 @@ textarea {
   }
 }
 
+.footer__socials {
+  display: flex;
+  gap: 8px;
+}
+
+.footer__socials a {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: var(--text-dim);
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.footer__socials a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 /* =========================================================
    Tablet / mobile: drop the frame, sidebar becomes a top bar
    ========================================================= */
@@ -1468,6 +1517,7 @@ textarea {
     inset: 0;
     z-index: -1;
     background: rgba(5, 9, 15, 0.82);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
   }
 
@@ -1609,7 +1659,7 @@ textarea {
   }
 
   .hero__words {
-    font-size: clamp(56px, 13vw, 140px);
+    font-size: clamp(44px, min(13vw, 16vh), 140px);
   }
 
   .hero {
@@ -1654,7 +1704,7 @@ textarea {
   }
 
   .hero__words {
-    font-size: clamp(48px, 15vw, 96px);
+    font-size: clamp(44px, min(15vw, 16vh), 96px);
   }
 
   .hero {

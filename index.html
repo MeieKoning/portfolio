@@ -10,8 +10,6 @@
     />
     <meta name="theme-color" content="#05090F" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href="/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/space-mono.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Open Graph / social previews -->
     <meta property="og:type" content="website" />
@@ -26,6 +24,19 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Meie Koning — portfolio" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Meie Koning",
+        "jobTitle": "Software developer",
+        "description": "Computer Science student at TU/e who builds AI tools, web apps and games.",
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Eindhoven University of Technology" },
+        "sameAs": ["https://github.com/MeieKoning", "https://www.linkedin.com/in/meiekoning"]
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -505,6 +516,11 @@
 
         <footer class="footer">
           <p class="meta">© <span id="year">2026</span> Meie Koning</p>
+          <ul class="footer__socials" aria-label="Social links">
+            <li><a href="https://www.linkedin.com/in/meiekoning" target="_blank" rel="noopener" aria-label="LinkedIn"><span class="icon" data-icon="linkedin"></span></a></li>
+            <li><a href="https://github.com/MeieKoning" target="_blank" rel="noopener" aria-label="GitHub"><span class="icon" data-icon="github"></span></a></li>
+            <li><a href="mailto:meie.koning@gmail.com" aria-label="Email"><span class="icon" data-icon="mail"></span></a></li>
+          </ul>
           <p class="meta">Built with Vite, GSAP &amp; Three.js</p>
           <a class="meta link-arrow link-arrow--up" href="#top">Back to top</a>
         </footer>

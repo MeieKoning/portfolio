@@ -70,6 +70,8 @@ function initHeroWords() {
 
   new IntersectionObserver(([entry]) => {
     heroVisible = entry.isIntersecting;
+    // Also pauses the hero's CSS animations (scroll cue) while it's off screen.
+    hero.classList.toggle('is-offscreen', !heroVisible);
     sync();
   }).observe(hero);
   document.addEventListener('visibilitychange', sync);
@@ -88,7 +90,11 @@ function initMenu() {
     sidebar.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.querySelector('.menu-toggle__label').textContent = open ? 'Close' : 'Menu';
+    // While the menu covers the page, keep focus and screen readers inside it.
+    scroller.inert = open;
+    if (open) nav.querySelector('a').focus();
   };
+  window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => e.matches && setOpen(false));
   toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
   nav.addEventListener('click', (e) => e.target.closest('a') && setOpen(false));
   document.addEventListener('keydown', (e) => {

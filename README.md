@@ -27,7 +27,8 @@ npm install
 npm run dev        # dev server on http://localhost:5173
 npm run build      # production build in dist/
 npm run preview    # serve the production build
-npm test           # Playwright smoke tests (first time: npx playwright install chromium)
+npm test           # Playwright smoke tests against the production build
+                   # (first time: npx playwright install chromium webkit firefox)
 ```
 
 ## Project structure
@@ -43,8 +44,10 @@ src/cursor.js           Custom cursor + magnetic buttons (mouse devices only)
 src/torus.js            Three.js wireframe torus (desktop/tablet)
 src/scroll.js           Lenis smooth scroll + GSAP ScrollTrigger animations
 src/styles/main.css     Design tokens, layout, responsive rules
-public/                 Static files: CV, OG image, project previews, favicon
-scripts/generate-assets.mjs  Regenerates the Open Graph image
+src/assets/fonts/       Space Grotesk + Space Mono (latin subsets, inlined into the CSS)
+public/                 Static files: CV, OG image, project previews, icons
+public/_headers         Cloudflare Pages headers: caching + security (CSP)
+scripts/generate-assets.mjs  Regenerates the Open Graph image and Apple touch icon
 tests/smoke.spec.js     Playwright smoke tests
 ```
 
@@ -54,6 +57,13 @@ tests/smoke.spec.js     Playwright smoke tests
 - Tech stack, Formspree ID and form placeholder text live in `src/config.js`.
 - Replace `public/cv/Meie-Koning-CV.pdf`, `public/photo-placeholder.svg` and `public/projects/*.svg` with the real files.
 - After changing the hero words or tagline, run `node scripts/generate-assets.mjs` to refresh the OG image.
+
+## Testing
+
+`npm test` builds the site and runs the smoke tests in four browsers: Chrome (desktop and a
+375px phone), Safari/WebKit on an iPhone profile, and Firefox. They check that the page loads
+without console errors, nav links reach their sections, the contact form validates and
+submits (Formspree is mocked), reduced motion works and the mobile menu is accessible.
 
 ## Deployment
 

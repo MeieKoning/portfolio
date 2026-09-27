@@ -10,6 +10,8 @@ test.beforeEach(async ({ page }, testInfo) => {
     // Headless Chromium renders WebGL in software and logs GPU driver notices
     // ("GPU stall due to ReadPixels"). They come from the test browser, not the site.
     if (m.text().includes('GL Driver Message')) return;
+    // Firefox's advisory for any scroll-driven animation, not an error.
+    if (m.text().includes('scroll-linked positioning effect')) return;
     if (['error', 'warning'].includes(m.type())) testInfo.consoleProblems.push(m.text());
   });
   page.on('pageerror', (e) => testInfo.consoleProblems.push(e.message));
@@ -125,6 +127,8 @@ test('contact form submits to Formspree', async ({ page }) => {
 });
 
 test('keyboard: skip link is the first tab stop and jumps to main', async ({ page, browserName }) => {
+  // Safari's Tab key skips links unless "Press Tab to highlight each item" is on (Option+Tab otherwise).
+  test.skip(browserName === 'webkit', 'Safari tabs to links with Option+Tab');
   await page.keyboard.press('Tab');
   await expect(page.locator('.skip-link')).toBeFocused();
   await page.keyboard.press('Enter');
@@ -147,4 +151,17 @@ test.describe('reduced motion', () => {
     await expectSectionAtTop(page, 'contact');
     await expect(page.locator('#contact h2')).toBeVisible();
   });
+});
+
+test('mobile menu traps the page behind it and closes with Escape', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'mobile only');
+  const toggle = page.locator('.menu-toggle'); // its label switches between Menu and Close
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('#site-nav a').first()).toBeFocused();
+  expect(await page.evaluate(() => document.getElementById('scroller').inert)).toBe(true);
+  await page.keyboard.press('Escape');
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(toggle).toBeFocused();
+  expect(await page.evaluate(() => document.getElementById('scroller').inert)).toBe(false);
 });
