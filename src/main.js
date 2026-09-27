@@ -5,6 +5,8 @@ import './styles/main.css';
 import { hydrateIcons, iconSvg, ICONS } from './icons.js';
 import { STACK, STACK_PREVIEW_COUNT, HERO_WORD_INTERVAL } from './config.js';
 import { initContact } from './contact.js';
+import { initParticles } from './particles.js';
+import { initCursor } from './cursor.js';
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const scroller = document.getElementById('scroller');
@@ -164,6 +166,13 @@ initMenu();
 initAnchors();
 initKeyboardScroll();
 initContact();
+initParticles({
+  canvas: document.getElementById('particles'),
+  hero: document.querySelector('.hero'),
+  scroller,
+  reducedMotion,
+});
+initCursor({ reducedMotion });
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // Open on the right section when the page is loaded with a hash.

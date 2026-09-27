@@ -102,3 +102,10 @@ test('keyboard: skip link is the first tab stop and jumps to main', async ({ pag
   await page.keyboard.press('Enter');
   await expect(page.locator('#main')).toBeFocused();
 });
+
+test('custom cursor only on mouse devices; particle canvas renders', async ({ page, isMobile }) => {
+  await expect(page.locator('#particles')).toBeAttached();
+  const size = await page.locator('#particles').evaluate((c) => c.width * c.height);
+  expect(size).toBeGreaterThan(0);
+  await expect(page.locator('.cursor-dot')).toHaveCount(isMobile ? 0 : 1);
+});

@@ -159,6 +159,95 @@ textarea {
 }
 
 /* =========================================================
+   Background canvas + custom cursor
+   ========================================================= */
+.bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 1.2s var(--ease-out);
+}
+
+.bg-canvas.is-dimmed {
+  opacity: 0.45;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+}
+
+.cursor-visible .cursor-dot,
+.cursor-visible .cursor-ring {
+  opacity: 1;
+}
+
+.cursor-dot::before,
+.cursor-ring::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  transition:
+    width 0.35s var(--ease-out),
+    height 0.35s var(--ease-out),
+    margin 0.35s var(--ease-out),
+    background 0.35s,
+    border-color 0.35s,
+    opacity 0.25s;
+}
+
+.cursor-dot::before {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--accent);
+}
+
+.cursor-ring::before {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1px solid rgba(94, 242, 224, 0.6);
+}
+
+.cursor-ring.is-hover::before {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border-color: var(--accent);
+  background: rgba(94, 242, 224, 0.08);
+}
+
+.cursor-ring.is-down::before {
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+}
+
+/* Over text fields: native text caret instead of the custom cursor */
+.cursor-ring.is-text::before,
+.cursor-dot.is-text::before {
+  opacity: 0;
+}
+
+.has-custom-cursor.cursor-visible,
+.has-custom-cursor.cursor-visible * {
+  cursor: none !important;
+}
+
+.has-custom-cursor.cursor-visible input:not([type='radio']),
+.has-custom-cursor.cursor-visible textarea {
+  cursor: text !important;
+}
+
+/* =========================================================
    Frame + scroll container
    ========================================================= */
 .frame {
